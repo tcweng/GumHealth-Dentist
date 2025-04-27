@@ -45,7 +45,7 @@ interface PatientProfile {
 }
 
 export default function DashboardPage() {
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<PatientProfile>();
   const [patients, setPatients] = useState<PatientProfile[]>([]);
   const [selectedPatient, setSelectedPatient] = useState<PatientProfile | null>(
     null
@@ -81,8 +81,6 @@ export default function DashboardPage() {
         router.push("/login");
         return;
       }
-
-      console.log(user.id);
 
       // Fetch assigned patient IDs
       const { data: assignments, error: assignmentsError } = await supabase
@@ -121,7 +119,7 @@ export default function DashboardPage() {
     loadProfile();
   }, [router]);
 
-  if (!profile) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="p-8">
